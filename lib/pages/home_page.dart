@@ -23,12 +23,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GetX<ValueController>(
-              init: valueController,
-              builder: (controller) {
-                log('criou getx');
-                return Text('Valor definido:${controller.defineValue}');
-              },
+            Obx(
+              () => Text('Valor definido:${valueController.defineValue}'),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 32),
@@ -36,20 +32,17 @@ class HomePage extends StatelessWidget {
                 controller: textController,
               ),
             ),
-            GetX<ValueController>(
-              init: valueController,
-              builder: (ctrl) {
-                return ctrl.isLoading.value
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: () {
-                          String value = textController.text;
+            Obx(
+              () => valueController.isLoading.value
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: () {
+                        String value = textController.text;
 
-                          valueController.setValue(value);
-                        },
-                        child: const Text('Confirmar'),
-                      );
-              },
+                        valueController.setValue(value);
+                      },
+                      child: const Text('Confirmar'),
+                    ),
             ),
           ],
         ),
