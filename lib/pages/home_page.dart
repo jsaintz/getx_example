@@ -23,20 +23,23 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GetBuilder<ValueController>(
+            GetX<ValueController>(
               init: valueController,
               builder: (controller) {
                 log('criou getx');
                 return Text('Valor definido:${controller.defineValue}');
               },
             ),
-            TextField(
-              controller: textController,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: TextField(
+                controller: textController,
+              ),
             ),
-            GetBuilder<ValueController>(
+            GetX<ValueController>(
               init: valueController,
               builder: (ctrl) {
-                return ctrl.isLoading
+                return ctrl.isLoading.value
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: () {
